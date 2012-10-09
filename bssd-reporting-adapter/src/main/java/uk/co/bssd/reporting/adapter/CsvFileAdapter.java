@@ -45,7 +45,7 @@ public class CsvFileAdapter<T> {
 	@SuppressWarnings("unchecked")
 	private T parseValue(String value) {
 		ClassWrapper classWrapper = ClassWrapper.forClass(this.clazz);
-		return (T)classWrapper.constructors().get(1).instantiate(value);
+		return (T)classWrapper.constructors().findByArgumentTypes(String.class).instantiate(value);
 	}
 	
 	private List<String> fileLines() {
