@@ -8,21 +8,21 @@
 		<artifactId>bssd-reporting-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
-	<artifactId>bssd-reporting-charts</artifactId>
+
+	<artifactId>bssd-reporting-chart</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Bssd Reporting Charts</name>
+	<name>Bssd Reporting Chart</name>
 	<description>Responsible for taking a dataset and outputting a pretty chart</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
+			<groupId>uk.co.bssd</groupId>
+			<artifactId>bssd-reporting-common</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
 		</dependency>
 
 		<!-- Test Dependencies -->
@@ -39,11 +39,6 @@
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-library</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
