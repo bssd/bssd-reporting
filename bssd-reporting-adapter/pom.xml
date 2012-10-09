@@ -18,6 +18,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>uk.co.bssd</groupId>
+			<artifactId>bssd-reflection</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>uk.co.bssd</groupId>
 			<artifactId>bssd-reporting-common</artifactId>
 		</dependency>
 		<dependency>

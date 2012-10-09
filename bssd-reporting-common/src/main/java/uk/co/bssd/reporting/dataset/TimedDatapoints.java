@@ -15,4 +15,8 @@ public class TimedDatapoints<T> implements Iterable<TimedDatapoint<T>>{
 	public Iterator<TimedDatapoint<T>> iterator() {
 		return this.timedDatapoints.iterator();
 	}
+
+	public int size() {
+		return this.timedDatapoints.size();
+	}
 }
