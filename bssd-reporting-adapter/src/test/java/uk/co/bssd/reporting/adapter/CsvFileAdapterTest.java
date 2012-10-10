@@ -21,7 +21,7 @@ public class CsvFileAdapterTest {
 	@Before
 	public void before() throws Exception {
 		File file = new File(getClass().getResource(FILENAME_CSV).toURI());
-		this.adapter = new CsvFileAdapter<Double>(Double.class, file);
+		this.adapter = new CsvFileAdapter<Double>(new DoubleParser(), file);
 	}
 
 	@Test

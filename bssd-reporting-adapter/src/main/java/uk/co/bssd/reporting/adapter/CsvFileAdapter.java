@@ -9,7 +9,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import uk.co.bssd.reflection.ClassWrapper;
 import uk.co.bssd.reporting.dataset.TimedDatapoint;
 import uk.co.bssd.reporting.dataset.TimedDatapoints;
 import uk.co.bssd.reporting.dataset.TimedDatapointsBuilder;
@@ -20,11 +19,11 @@ public class CsvFileAdapter<T> {
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat
 			.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
-	private final Class<T> clazz;
 	private final File file;
+	private final ValueParser<T> valueParser;
 
-	public CsvFileAdapter(Class<T> clazz, File file) {
-		this.clazz = clazz;
+	public CsvFileAdapter(ValueParser<T> parser, File file) {
+		this.valueParser = parser;
 		this.file = file;
 	}
 
@@ -35,17 +34,11 @@ public class CsvFileAdapter<T> {
 		for (String line : fileLines()) {
 			String[] parts = line.split(SEPERATOR);
 			DateTime timestamp = DATE_TIME_FORMATTER.parseDateTime(parts[0]);
-			T value = parseValue(parts[1]);
+			T value = this.valueParser.parse(parts[1]);
 			builder.withTimedDatapoint(new TimedDatapoint<T>(timestamp, value));
 		}
 
 		return builder.build();
-	}
-	
-	@SuppressWarnings("unchecked")
-	private T parseValue(String value) {
-		ClassWrapper classWrapper = ClassWrapper.forClass(this.clazz);
-		return (T)classWrapper.constructors().findByArgumentTypes(String.class).instantiate(value);
 	}
 	
 	private List<String> fileLines() {
