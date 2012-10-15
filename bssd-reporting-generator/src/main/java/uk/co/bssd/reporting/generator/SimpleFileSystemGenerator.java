@@ -28,7 +28,6 @@ public class SimpleFileSystemGenerator {
 		}
 
 		for (File inputFile : inputDirectory.listFiles()) {
-
 			String filename = inputFile.getName();
 			String basename = filename.substring(0, filename.lastIndexOf('.'));
 
