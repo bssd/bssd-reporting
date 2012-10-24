@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -10,7 +11,7 @@
 	<artifactId>bssd-reporting-pdf</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Bssd Reporting Chart</name>
+	<name>Bssd Reporting Pdf</name>
 	<description>Responsible for producing a pdf report</description>
 
 	<dependencies>
@@ -18,10 +19,10 @@
 			<groupId>uk.co.bssd</groupId>
 			<artifactId>bssd-reporting-common</artifactId>
 		</dependency>
-<dependency>
-    <groupId>org.apache.xmlgraphics</groupId>
-    <artifactId>fop</artifactId>
-</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>fop</artifactId>
+		</dependency>
 
 		<!-- Test Dependencies -->
 		<dependency>
