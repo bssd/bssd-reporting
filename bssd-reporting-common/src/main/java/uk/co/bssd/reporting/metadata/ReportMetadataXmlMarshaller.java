@@ -1,4 +1,4 @@
-package uk.co.bssd.reporting.generator.metadata;
+package uk.co.bssd.reporting.metadata;
 
 import java.io.StringWriter;
 

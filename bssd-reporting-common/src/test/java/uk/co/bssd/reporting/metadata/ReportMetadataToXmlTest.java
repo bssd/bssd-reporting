@@ -1,4 +1,4 @@
-package uk.co.bssd.reporting.generator.metadata;
+package uk.co.bssd.reporting.metadata;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
@@ -8,6 +8,11 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import uk.co.bssd.reporting.metadata.ChartMetadata;
+import uk.co.bssd.reporting.metadata.ReportMetadata;
+import uk.co.bssd.reporting.metadata.ReportMetadataXmlMarshaller;
+import uk.co.bssd.reporting.metadata.SectionMetadata;
 
 public class ReportMetadataToXmlTest {
 

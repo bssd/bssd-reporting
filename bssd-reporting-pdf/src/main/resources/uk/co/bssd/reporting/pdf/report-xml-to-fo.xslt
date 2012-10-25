@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
 	<xsl:output method="xml" indent="yes" />
-	<xsl:template match="/">
+	<xsl:template match="/report">
 		<fo:root>
 			<fo:layout-master-set>
 				<fo:simple-page-master master-name="A4-portrait"
@@ -11,16 +11,21 @@
 				</fo:simple-page-master>
 			</fo:layout-master-set>
 			<fo:page-sequence master-reference="A4-portrait">
-				<fo:flow flow-name="xsl-region-body">
-					<xsl:for-each select="charts/chart">
-						<fo:block>
-							<xsl:variable name="filename" select="node()" />
-							<fo:external-graphic width="480pt" height="320pt"
-								content-width="480pt" content-height="320pt" text-align="center"
-								src="{$filename}" />
-						</fo:block>
-					</xsl:for-each>
-				</fo:flow>
+				<xsl:for-each select="sections/section">
+					<fo:flow flow-name="xsl-region-body">
+						<xsl:for-each select="charts/chart">
+							<fo:block>
+								<xsl:value-of select="@title" />
+							</fo:block>
+							<fo:block>
+								<xsl:variable name="filename" select="@filename" />
+								<fo:external-graphic width="480pt" height="320pt"
+									content-width="480pt" content-height="320pt" text-align="center"
+									src="{$filename}" />
+							</fo:block>
+						</xsl:for-each>
+					</fo:flow>
+				</xsl:for-each>
 			</fo:page-sequence>
 		</fo:root>
 	</xsl:template>

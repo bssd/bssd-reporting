@@ -1,4 +1,4 @@
-package uk.co.bssd.reporting.generator.metadata;
+package uk.co.bssd.reporting.metadata;
 
 import javax.xml.bind.annotation.XmlAccessOrder;
 import javax.xml.bind.annotation.XmlAccessType;
