@@ -27,6 +27,10 @@ import uk.co.bssd.reporting.chart.JpegChartWriter;
 import uk.co.bssd.reporting.chart.TimeSeriesChart;
 import uk.co.bssd.reporting.chart.TimeSeriesChartDescriptor;
 import uk.co.bssd.reporting.dataset.TimedDatapoints;
+import uk.co.bssd.reporting.metadata.ChartMetadata;
+import uk.co.bssd.reporting.metadata.ReportMetadata;
+import uk.co.bssd.reporting.metadata.SectionMetadata;
+import uk.co.bssd.reporting.pdf.PdfGenerator;
 
 public class SimpleFileSystemGenerator {
 
@@ -41,6 +45,10 @@ public class SimpleFileSystemGenerator {
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to create output directory", e);
 		}
+
+		ReportMetadata reportMetadata = new ReportMetadata();
+		SectionMetadata section = new SectionMetadata();
+		reportMetadata.addSection(section);
 
 		for (File inputFile : inputDirectory.listFiles()) {
 			String filename = inputFile.getName();
@@ -57,6 +65,14 @@ public class SimpleFileSystemGenerator {
 			File outputFile = new File(outputDirectoryName, basename + ".jpeg");
 			ChartWriter chartWriter = new JpegChartWriter(outputFile, 640, 480);
 			chart.write(chartWriter);
+
+			ChartMetadata chartMetadata = new ChartMetadata(basename,
+					outputFile.getAbsolutePath());
+			section.addChart(chartMetadata);
 		}
+
+		PdfGenerator pdfGenerator = new PdfGenerator();
+		pdfGenerator.generatePdf(reportMetadata, outputDirectoryName
+				+ "/report.pdf");
 	}
 }
