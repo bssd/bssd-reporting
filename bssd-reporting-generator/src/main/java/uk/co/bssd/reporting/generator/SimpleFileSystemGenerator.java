@@ -22,10 +22,13 @@ import org.apache.commons.io.FileUtils;
 
 import uk.co.bssd.reporting.adapter.CsvFileAdapter;
 import uk.co.bssd.reporting.adapter.DoubleParser;
+import uk.co.bssd.reporting.chart.ChartDescriptorTemplate;
+import uk.co.bssd.reporting.chart.ChartDescriptorTemplates;
 import uk.co.bssd.reporting.chart.ChartWriter;
-import uk.co.bssd.reporting.chart.JpegChartWriter;
+import uk.co.bssd.reporting.chart.PngChartWriter;
 import uk.co.bssd.reporting.chart.TimeSeriesChart;
 import uk.co.bssd.reporting.chart.TimeSeriesChartDescriptor;
+import uk.co.bssd.reporting.chart.TimeSeriesChartDescriptorFactory;
 import uk.co.bssd.reporting.dataset.TimedDatapoints;
 import uk.co.bssd.reporting.metadata.ChartMetadata;
 import uk.co.bssd.reporting.metadata.ReportMetadata;
@@ -40,15 +43,13 @@ public class SimpleFileSystemGenerator {
 
 		File inputDirectory = new File(inputDirectoryName);
 
-		try {
-			FileUtils.forceMkdir(new File(outputDirectoryName));
-		} catch (IOException e) {
-			throw new RuntimeException("Unable to create output directory", e);
-		}
+		createOutputDirectory(outputDirectoryName);
 
 		ReportMetadata reportMetadata = new ReportMetadata();
 		SectionMetadata section = new SectionMetadata();
 		reportMetadata.addSection(section);
+
+		ChartDescriptorTemplates chartDescriptorTemplates = chartDescriptorTemplates();
 
 		for (File inputFile : inputDirectory.listFiles()) {
 			String filename = inputFile.getName();
@@ -58,12 +59,14 @@ public class SimpleFileSystemGenerator {
 					new DoubleParser(), inputFile);
 			TimedDatapoints<Double> timedDatapoints = fileAdapter.adapt();
 
+			TimeSeriesChartDescriptor chartDescriptor = (TimeSeriesChartDescriptor) chartDescriptorTemplates
+					.findTemplate(basename).chartDescriptorFactory()
+					.chartDescriptor(basename);
 			TimeSeriesChart<Double> chart = new TimeSeriesChart<Double>(
-					new TimeSeriesChartDescriptor(basename, true, basename,
-							"Time", "%"), timedDatapoints);
+					chartDescriptor, timedDatapoints);
 
-			File outputFile = new File(outputDirectoryName, basename + ".jpeg");
-			ChartWriter chartWriter = new JpegChartWriter(outputFile, 640, 480);
+			File outputFile = new File(outputDirectoryName, basename + ".png");
+			ChartWriter chartWriter = new PngChartWriter(outputFile, 480, 640);
 			chart.write(chartWriter);
 
 			ChartMetadata chartMetadata = new ChartMetadata(basename,
@@ -74,5 +77,24 @@ public class SimpleFileSystemGenerator {
 		PdfGenerator pdfGenerator = new PdfGenerator();
 		pdfGenerator.generatePdf(reportMetadata, outputDirectoryName
 				+ "/report.pdf");
+	}
+
+	private static void createOutputDirectory(String outputDirectoryName) {
+		try {
+			FileUtils.forceMkdir(new File(outputDirectoryName));
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to create output directory", e);
+		}
+	}
+
+	private static ChartDescriptorTemplates chartDescriptorTemplates() {
+		ChartDescriptorTemplates templates = new ChartDescriptorTemplates();
+		templates.addTemplate(new ChartDescriptorTemplate("*cpu*",
+				new TimeSeriesChartDescriptorFactory(true, "Cpu Usage", "Time",
+						"%")));
+		templates.addTemplate(new ChartDescriptorTemplate("*heap*",
+				new TimeSeriesChartDescriptorFactory(true, "Heap Usage",
+						"Time", "bytes")));
+		return templates;
 	}
 }

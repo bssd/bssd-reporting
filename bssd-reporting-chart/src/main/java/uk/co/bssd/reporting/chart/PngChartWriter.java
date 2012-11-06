@@ -21,17 +21,17 @@ import java.io.IOException;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 
-public class JpegChartWriter implements ChartWriter {
+public class PngChartWriter implements ChartWriter {
 
 	private final File file;
 	private final int height;
 	private final int width;
 
-	public JpegChartWriter(String filename, int height, int width) {
+	public PngChartWriter(String filename, int height, int width) {
 		this(new File(filename), height, width);
 	}
 
-	public JpegChartWriter(File file, int height, int width) {
+	public PngChartWriter(File file, int height, int width) {
 		this.file = file;
 		this.height = height;
 		this.width = width;
@@ -40,7 +40,8 @@ public class JpegChartWriter implements ChartWriter {
 	@Override
 	public void write(JFreeChart chart) {
 		try {
-			ChartUtilities.saveChartAsJPEG(this.file, chart, this.width, this.height);
+			ChartUtilities.saveChartAsPNG(this.file, chart, this.width,
+					this.height);
 		} catch (IOException e) {
 			throw new IllegalStateException("Unable to save chart", e);
 		}

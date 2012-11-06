@@ -31,7 +31,7 @@ import uk.co.bssd.reporting.metadata.SectionMetadata;
 public class PdfGeneratorTest {
 
 	private static final String CHART_TITLE = "Chart";
-	private static final String CHART_FILENAME = "src/test/resources/chart.jpeg";
+	private static final String CHART_FILENAME = "src/test/resources/chart.png";
 
 	private static final String PDF_FILENAME = "target/"
 			+ UUID.randomUUID().toString() + ".pdf";
